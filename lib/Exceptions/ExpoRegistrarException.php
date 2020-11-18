@@ -4,14 +4,9 @@ namespace ExponentPhpSDK\Exceptions;
 
 class ExpoRegistrarException extends ExpoException
 {
-    /**
-     * Invalid token exception
-     *
-     * @return static
-     */
-    public static function invalidToken()
+    public static function invalidToken($token)
     {
-        return new static('The token provided is not a valid expo push notification token.', 422);
+        return new static($token, 422);
     }
 
     /**

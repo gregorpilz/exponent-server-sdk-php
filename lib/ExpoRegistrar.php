@@ -35,7 +35,7 @@ class ExpoRegistrar
     public function registerInterest($interest, $token)
     {
         if (! $this->isValidExpoPushToken($token)) {
-            throw ExpoRegistrarException::invalidToken();
+            throw ExpoRegistrarException::invalidToken($token);
         }
 
         $stored = $this->repository->store($interest, $token);
