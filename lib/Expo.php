@@ -39,6 +39,14 @@ class Expo
     }
 
     /**
+     * @return ExpoRegistrar
+     */
+    public function getRegistrar(): ExpoRegistrar
+    {
+        return $this->registrar;
+    }
+
+    /**
      * Creates an instance of this class with the normal setup
      * It uses the ExpoFileDriver as the repository.
      *
