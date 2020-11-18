@@ -12,6 +12,7 @@ class Expo
      * The Expo Api Url that will receive the requests
      */
     const EXPO_API_URL = 'https://exp.host/--/api/v2/push/send';
+    const EXPO_API_URL_RECEIPTS = 'https://exp.host/--/api/v2/push/getReceipts';
 
     /**
      * cURL handler
@@ -116,6 +117,33 @@ class Expo
     }
 
     /**
+     * Send a notification via the Expo Push Notifications Api.
+     *
+     * @param array $recipients
+     *
+     * @throws ExpoException
+     * @throws UnexpectedResponseException
+     *
+     * @return array|bool
+     */
+    public function getReceipts(array $recipients)
+    {
+        if (count($recipients) == 0) {
+            throw new ExpoException('Interests array must not be empty.');
+        }
+
+        $postData = [
+            'ids' => $recipients
+        ];
+
+        $ch = $this->prepareCurl(self::EXPO_API_URL_RECEIPTS);
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+
+        return $this->executeCurl($ch);
+    }
+
+    /**
      * Determines if the request we sent has failed completely
      *
      * @param array $response
@@ -144,12 +172,12 @@ class Expo
      *
      * @return null|resource
      */
-    private function prepareCurl()
+    private function prepareCurl(string $url = self::EXPO_API_URL)
     {
         $ch = $this->getCurl();
 
         // Set cURL opts
-        curl_setopt($ch, CURLOPT_URL, self::EXPO_API_URL);
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'accept: application/json',
             'content-type: application/json',
