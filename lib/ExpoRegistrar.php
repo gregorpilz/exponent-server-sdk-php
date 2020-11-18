@@ -111,8 +111,8 @@ class ExpoRegistrar
      *
      * @return bool
      */
-    private function isValidExpoPushToken(string $token)
+    public function isValidExpoPushToken(string $token): bool
     {
-        return  substr($token, 0, 18) ===  "ExponentPushToken[" && substr($token, -1) === ']';
+        return substr($token, 0, 18) ===  "ExponentPushToken[" && substr($token, -1) === ']';
     }
 }
